@@ -24,7 +24,7 @@ class GuestDashboardTest extends TestCase
     }
 
     /** @test */
-    public function public_dashboard_displays_public_projects_and_stats(): void
+    public function public_dashboard_displays_only_in_progress_and_on_hold_projects(): void
     {
         $client = Client::factory()->create();
         $projectDone = Project::factory()->create([
@@ -38,18 +38,25 @@ class GuestDashboardTest extends TestCase
             'status'   => 'in_progress',
             'category' => 'personal',
         ]);
+        $projectHold = Project::factory()->create([
+            'title'    => 'Proyek Tertunda Klien',
+            'status'   => 'on_hold',
+            'category' => 'client',
+            'client_id' => $client->id,
+        ]);
 
         $response = $this->get('/');
 
         $response->assertStatus(200)
-            ->assertSee('Proyek Selesai Super')
-            ->assertSee('Proyek Dalam Pengerjaan');
+            ->assertSee('Proyek Dalam Pengerjaan')
+            ->assertSee('Proyek Tertunda Klien')
+            ->assertDontSee('Proyek Selesai Super');
     }
 
     /** @test */
     public function public_dashboard_hides_financial_transaction_details(): void
     {
-        $project = Project::factory()->create(['title' => 'Secret Project', 'budget' => 99999999]);
+        $project = Project::factory()->create(['title' => 'Secret Project', 'budget' => 99999999, 'status' => 'in_progress']);
         Transaction::factory()->create([
             'project_id'  => $project->id,
             'amount'      => 50000000,

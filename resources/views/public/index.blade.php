@@ -125,11 +125,9 @@
                     <label for="status" class="block text-xs font-semibold text-zinc-400 uppercase mb-2">Status Pengerjaan</label>
                     <select name="status" id="status" onchange="this.form.submit()"
                             class="w-full bg-zinc-900/60 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-cyan-500 focus:ring-cyan-500 focus:outline-none transition-colors">
-                        <option value="">Semua Status</option>
-                        <option value="in_progress" {{ request('status') === 'in_progress' ? 'selected' : '' }}>Sedang Dikerjakan (In Progress)</option>
-                        <option value="done" {{ request('status') === 'done' ? 'selected' : '' }}>Selesai (Done)</option>
-                        <option value="todo" {{ request('status') === 'todo' ? 'selected' : '' }}>Persiapan (To Do)</option>
-                        <option value="on_hold" {{ request('status') === 'on_hold' ? 'selected' : '' }}>Tertunda (On Hold)</option>
+                        <option value="">Semua Status Aktif</option>
+                        <option value="in_progress" {{ request('status') === 'in_progress' ? 'selected' : '' }}>⚡ Sedang Dikerjakan (In Progress)</option>
+                        <option value="on_hold" {{ request('status') === 'on_hold' ? 'selected' : '' }}>⏸️ Tertunda (On Hold)</option>
                     </select>
                 </div>
             </form>

@@ -14,7 +14,9 @@ use App\Http\Controllers\{
 
 // Public Guest Dashboard (Portofolio & Status Proyek Publik)
 Route::get('/', function (\Illuminate\Http\Request $request) {
-    $query = \App\Models\Project::with('client');
+    // Hanya tampilkan proyek yang sedang dalam progres atau tertunda
+    $query = \App\Models\Project::with('client')
+        ->whereIn('status', ['in_progress', 'on_hold']);
 
     if ($request->filled('category')) {
         $query->where('category', $request->category);
@@ -22,7 +24,7 @@ Route::get('/', function (\Illuminate\Http\Request $request) {
     if ($request->filled('type')) {
         $query->where('type', $request->type);
     }
-    if ($request->filled('status')) {
+    if ($request->filled('status') && in_array($request->status, ['in_progress', 'on_hold'])) {
         $query->where('status', $request->status);
     }
     if ($request->filled('search')) {
