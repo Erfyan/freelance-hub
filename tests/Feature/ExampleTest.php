@@ -11,16 +11,9 @@ class ExampleTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function root_redirects_to_dashboard(): void
+    public function root_renders_public_dashboard(): void
     {
-        $this->get('/')->assertRedirect(route('dashboard'));
-    }
-
-    /** @test */
-    public function root_redirects_authenticated_user_to_dashboard(): void
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user)->get('/')->assertRedirect(route('dashboard'));
+        $this->get('/')->assertStatus(200)->assertViewIs('public.index');
     }
 
     /** @test */

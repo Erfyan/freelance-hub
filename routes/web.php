@@ -12,10 +12,31 @@ use App\Http\Controllers\{
     StatisticsController
 };
 
-// Root redirect ke dashboard
-Route::get('/', function () {
-    return redirect()->route('dashboard');
-});
+// Public Guest Dashboard (Portofolio & Status Proyek Publik)
+Route::get('/', function (\Illuminate\Http\Request $request) {
+    $query = \App\Models\Project::with('client');
+
+    if ($request->filled('category')) {
+        $query->where('category', $request->category);
+    }
+    if ($request->filled('type')) {
+        $query->where('type', $request->type);
+    }
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
+    if ($request->filled('search')) {
+        $query->where('title', 'like', '%' . $request->search . '%');
+    }
+
+    $projects = $query->latest()->paginate(12);
+
+    $totalDone = \App\Models\Project::where('status', 'done')->count();
+    $totalInProgress = \App\Models\Project::where('status', 'in_progress')->count();
+    $totalClients = \App\Models\Client::count();
+
+    return view('public.index', compact('projects', 'totalDone', 'totalInProgress', 'totalClients'));
+})->name('public.index');
 
 // WebAuthn routes (bisa diakses tanpa login untuk discovery)
 Route::get('/webauthn/login-page', [WebAuthnController::class, 'showLoginForm'])->name('webauthn.login.page');
