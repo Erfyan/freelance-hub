@@ -77,11 +77,6 @@
             </span>
         </button>
 
-        {{-- Link ke register --}}
-        <p class="text-center text-sm text-gray-400 mt-6">
-            Belum punya akun?
-            <a href="{{ route('register') }}" class="text-cyan-400 hover:text-cyan-300 transition-colors font-semibold">Daftar Sekarang</a>
-        </p>
     </form>
 
     {{-- Divider --}}

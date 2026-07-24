@@ -17,13 +17,26 @@
         }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-300 font-sans antialiased overflow-x-hidden">
+<body class="bg-gray-950 text-gray-300 font-sans antialiased overflow-x-hidden" x-data="{ sidebarOpen: false }">
     <!-- Canvas untuk robot 3D & partikel (Global) -->
     <div id="dashboard-bg" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></div>
 
     <div class="flex min-h-screen bg-transparent relative z-10">
+        <!-- Mobile Sidebar Backdrop -->
+        <div x-show="sidebarOpen" 
+             class="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm transition-opacity md:hidden"
+             @click="sidebarOpen = false"
+             x-transition:enter="transition-opacity ease-linear duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity ease-linear duration-300"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+        </div>
+
         <!-- Sidebar -->
-        <aside class="w-64 bg-zinc-950 border-r border-zinc-900 text-zinc-300 flex flex-col flex-shrink-0 relative z-30">
+        <aside :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}" 
+               class="fixed inset-y-0 left-0 z-50 w-64 bg-zinc-950 border-r border-zinc-900 text-zinc-300 flex flex-col flex-shrink-0 transition-transform duration-300 ease-in-out md:relative md:translate-x-0">
             <div class="p-6 border-b border-zinc-900">
                 <h1 class="text-xl font-semibold text-white tracking-tight">
                     Freelance Hub
@@ -96,7 +109,7 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="min-h-screen bg-transparent relative z-10 flex-1">
+        <div class="min-h-screen bg-transparent relative z-10 flex-1 flex flex-col w-full overflow-hidden">
 
             @php
                 $runningTimer = \App\Models\TimeLog::where('is_running', true)->with('project')->first();
@@ -116,29 +129,36 @@
             @endif
 
             <!-- Page Heading -->
-            <header class="bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-8 py-5 flex items-center justify-between sticky top-0 z-20">
-                <div>
-                    @if (isset($header))
-                        {{ $header }}
-                    @else
-                        <h2 class="text-xl font-semibold text-white">Selamat datang, {{ auth()->user()->name }}</h2>
-                        <p class="text-sm text-zinc-500 mt-0.5">{{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}</p>
-                    @endif
+            <header class="bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-4 md:px-8 py-4 md:py-5 flex items-center justify-between sticky top-0 z-20">
+                <div class="flex items-center gap-4 w-full">
+                    <button @click="sidebarOpen = true" class="md:hidden p-2 -ml-2 text-zinc-400 hover:text-white focus:outline-none shrink-0">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <div class="flex-1 w-full">
+                        @if (isset($header))
+                            {{ $header }}
+                        @else
+                            <h2 class="text-xl font-semibold text-white">Selamat datang, {{ auth()->user()->name }}</h2>
+                            <p class="text-sm text-zinc-500 mt-0.5">{{ \Carbon\Carbon::now()->isoFormat('dddd, D MMMM Y') }}</p>
+                        @endif
+                    </div>
                 </div>
             </header>
 
             <!-- Page Content -->
-            <div class="p-8 animate-fade-in-up">
+            <div class="p-4 md:p-8 animate-fade-in-up overflow-x-hidden">
                 {{ $slot }}
             </div>
         </div>
     </div>
 
     <!-- Global Timer Indicator -->
-    @if(session('timer_running_project_id'))
+    @if(isset($runningTimer) && $runningTimer)
         <x-global-timer 
-            :project="App\Models\Project::find(session('timer_running_project_id'))"
-            :startTime="session('timer_start_time')"
+            :project="$runningTimer->project"
+            :startTime="$runningTimer->start_time->toIso8601String()"
         />
     @endif
 
