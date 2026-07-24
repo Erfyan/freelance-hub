@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->enum('type', ['joki', 'aplikasi']);
+            $table->enum('status', ['todo', 'in_progress', 'on_hold', 'done', 'cancelled'])->default('todo');
+            $table->date('deadline')->nullable();
+            $table->integer('estimated_hours')->nullable();
+            $table->decimal('budget', 12, 2)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

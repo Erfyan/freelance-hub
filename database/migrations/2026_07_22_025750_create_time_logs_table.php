@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('time_logs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->timestamp('start_time')->useCurrent();
+            $table->timestamp('end_time')->nullable();
+            $table->integer('duration_minutes')->nullable();
+            $table->boolean('is_running')->default(false);
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

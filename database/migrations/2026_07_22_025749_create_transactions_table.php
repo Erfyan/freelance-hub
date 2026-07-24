@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->enum('type', ['income', 'expense']);
+            $table->decimal('amount', 15, 2);
+            $table->text('description')->nullable();
+            $table->date('transaction_date');
+            $table->string('payment_proof')->nullable();
             $table->timestamps();
         });
     }
