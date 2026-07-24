@@ -43,6 +43,16 @@
                     </svg>
                     <span>Konsultasi & Order Proyek</span>
                 </a>
+
+                <!-- Scroll to Project List Button -->
+                <a href="#daftar-tugas"
+                   onclick="event.preventDefault(); document.getElementById('daftar-tugas').scrollIntoView({ behavior: 'smooth', block: 'start' });"
+                   class="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/40 text-white font-bold rounded-2xl text-sm hover:scale-105 transition-all flex items-center gap-2 group">
+                    <svg class="h-5 w-5 text-cyan-400 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                    <span>Pantau Tugas</span>
+                </a>
             </div>
         </div>
 
@@ -89,7 +99,7 @@
         </div>
 
         <!-- Filter & Search Bar -->
-        <div class="glass-panel p-6 rounded-3xl mb-8 border border-zinc-900">
+        <div id="daftar-tugas" class="glass-panel p-6 rounded-3xl mb-8 border border-zinc-900 scroll-mt-20">
             <form action="{{ route('public.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <!-- Search Input -->
                 <div>
