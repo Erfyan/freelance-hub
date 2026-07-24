@@ -46,6 +46,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+
         <!-- Quick Links / Media Sosial -->
         <div class="mb-8 p-4 rounded-2xl glass-panel flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
