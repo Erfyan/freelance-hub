@@ -30,7 +30,7 @@
                 Status Proyek Real-Time
             </span>
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
-                Pantau Progres Pekerjaan & <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Portofolio Proyek</span>
+                Pantau Progres Tugas & <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Jasa Joki Tugas</span>
             </h2>
             <p class="text-base sm:text-lg text-zinc-400 mb-6 leading-relaxed">
                 Platform resmi pemantauan status pengerjaan sistem aplikasi, joki koding, dan proyek freelance. Transparan, terstruktur, dan terpantau secara langsung.
@@ -90,23 +90,12 @@
 
         <!-- Filter & Search Bar -->
         <div class="glass-panel p-6 rounded-3xl mb-8 border border-zinc-900">
-            <form action="{{ route('public.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <form action="{{ route('public.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <!-- Search Input -->
                 <div>
                     <label for="search" class="block text-xs font-semibold text-zinc-400 uppercase mb-2">Cari Nama Proyek</label>
                     <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Ketik kata kunci..."
                            class="w-full bg-zinc-900/60 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-cyan-500 focus:ring-cyan-500 focus:outline-none placeholder-zinc-500 transition-colors">
-                </div>
-
-                <!-- Category Filter -->
-                <div>
-                    <label for="category" class="block text-xs font-semibold text-zinc-400 uppercase mb-2">Kategori</label>
-                    <select name="category" id="category" onchange="this.form.submit()"
-                            class="w-full bg-zinc-900/60 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-cyan-500 focus:ring-cyan-500 focus:outline-none transition-colors">
-                        <option value="">Semua Kategori</option>
-                        <option value="client" {{ request('category') === 'client' ? 'selected' : '' }}>Proyek Klien</option>
-                        <option value="personal" {{ request('category') === 'personal' ? 'selected' : '' }}>Proyek Personal</option>
-                    </select>
                 </div>
 
                 <!-- Type Filter -->

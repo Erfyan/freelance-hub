@@ -14,13 +14,11 @@ use App\Http\Controllers\{
 
 // Public Guest Dashboard (Portofolio & Status Proyek Publik)
 Route::get('/', function (\Illuminate\Http\Request $request) {
-    // Hanya tampilkan proyek yang sedang dalam progres atau tertunda
+    // Hanya tampilkan proyek Klien yang sedang dalam progres atau tertunda (Proyek Personal DIKECUALIKAN)
     $query = \App\Models\Project::with('client')
+        ->where('category', 'client')
         ->whereIn('status', ['in_progress', 'on_hold']);
 
-    if ($request->filled('category')) {
-        $query->where('category', $request->category);
-    }
     if ($request->filled('type')) {
         $query->where('type', $request->type);
     }

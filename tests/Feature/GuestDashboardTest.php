@@ -24,39 +24,47 @@ class GuestDashboardTest extends TestCase
     }
 
     /** @test */
-    public function public_dashboard_displays_only_in_progress_and_on_hold_projects(): void
+    public function public_dashboard_displays_only_client_projects_that_are_in_progress_or_on_hold(): void
     {
         $client = Client::factory()->create();
+
         $projectDone = Project::factory()->create([
             'title'     => 'Proyek Selesai Super',
             'status'    => 'done',
             'client_id' => $client->id,
             'category'  => 'client',
         ]);
-        $projectProgress = Project::factory()->create([
-            'title'    => 'Proyek Dalam Pengerjaan',
+        $projectClientProgress = Project::factory()->create([
+            'title'     => 'Proyek Klien Dalam Pengerjaan',
+            'status'    => 'in_progress',
+            'category'  => 'client',
+            'client_id' => $client->id,
+        ]);
+        $projectPersonalProgress = Project::factory()->create([
+            'title'    => 'Proyek Personal Pribadi',
             'status'   => 'in_progress',
             'category' => 'personal',
-        ]);
-        $projectHold = Project::factory()->create([
-            'title'    => 'Proyek Tertunda Klien',
-            'status'   => 'on_hold',
-            'category' => 'client',
-            'client_id' => $client->id,
         ]);
 
         $response = $this->get('/');
 
         $response->assertStatus(200)
-            ->assertSee('Proyek Dalam Pengerjaan')
-            ->assertSee('Proyek Tertunda Klien')
+            ->assertSee('Proyek Klien Dalam Pengerjaan')
+            ->assertDontSee('Proyek Personal Pribadi')
             ->assertDontSee('Proyek Selesai Super');
     }
 
     /** @test */
     public function public_dashboard_hides_financial_transaction_details(): void
     {
-        $project = Project::factory()->create(['title' => 'Secret Project', 'budget' => 99999999, 'status' => 'in_progress']);
+        $client = Client::factory()->create();
+        $project = Project::factory()->create([
+            'title'     => 'Secret Project',
+            'budget'    => 99999999,
+            'status'    => 'in_progress',
+            'category'  => 'client',
+            'client_id' => $client->id,
+        ]);
         Transaction::factory()->create([
             'project_id'  => $project->id,
             'amount'      => 50000000,
