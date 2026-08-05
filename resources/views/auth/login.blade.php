@@ -89,14 +89,14 @@
         </div>
     </div>
 
-    {{-- Tombol Biometrik --}}
+    {{-- Tombol Passkey --}}
     <button type="button" id="biometric-login-btn"
-            class="w-full py-3 font-semibold text-white bg-white/10 border border-white/20 rounded-full hover:bg-white/20 transition-all duration-200 flex items-center justify-center space-x-2"
+            class="w-full py-3 font-semibold text-white bg-white/5 border border-white/15 hover:bg-cyan-500/10 hover:border-cyan-500/30 rounded-full transition-all duration-200 flex items-center justify-center gap-2.5 group"
             style="display: none;">
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="h-5 w-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
         </svg>
-        <span>Login dengan Sidik Jari</span>
+        <span class="text-sm">Login dengan Passkey / Sidik Jari</span>
     </button>
 
     <style>
@@ -194,7 +194,7 @@
                 if (result.redirect) {
                     window.location.href = result.redirect;
                 } else {
-                    alert('Gagal login biometrik. Coba lagi.');
+                    window.location.href = '/dashboard';
                 }
             } catch (error) {
                 console.error('Biometric login error:', error);

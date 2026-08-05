@@ -10,7 +10,7 @@
                     Freelance Hub
                     <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Public Showcase</span>
                 </h1>
-                <p class="text-xs text-zinc-400">Portal Status Proyek & Portofolio</p>
+                <p class="text-xs text-zinc-400">Portal Pantau Tugas & Jasa Joki Tugas</p>
             </div>
         </a>
 
