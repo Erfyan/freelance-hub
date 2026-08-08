@@ -2,8 +2,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <!-- Logo & Branding -->
         <a href="{{ route('public.index') }}" class="flex items-center gap-3 group">
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-                FH
+            <div class="h-12 w-12 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform overflow-hidden bg-white/5">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-full w-full object-contain p-1">
             </div>
             <div>
                 <h1 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">

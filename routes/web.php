@@ -14,22 +14,23 @@ use App\Http\Controllers\{
 
 // Public Guest Dashboard (Portofolio & Status Proyek Publik)
 Route::get('/', function (\Illuminate\Http\Request $request) {
-    // Hanya tampilkan proyek Klien yang sedang dalam progres atau tertunda (Proyek Personal DIKECUALIKAN)
+    // Tampilkan proyek Klien (Proyek Personal DIKECUALIKAN), kecuali yang dibatalkan
     $query = \App\Models\Project::with('client')
         ->where('category', 'client')
-        ->whereIn('status', ['in_progress', 'on_hold']);
+        ->where('status', '!=', 'cancelled');
 
     if ($request->filled('type')) {
         $query->where('type', $request->type);
     }
-    if ($request->filled('status') && in_array($request->status, ['in_progress', 'on_hold'])) {
+    if ($request->filled('status') && in_array($request->status, ['in_progress', 'on_hold', 'done'])) {
         $query->where('status', $request->status);
     }
     if ($request->filled('search')) {
         $query->where('title', 'like', '%' . $request->search . '%');
     }
 
-    $projects = $query->latest()->paginate(12);
+    // Urutkan berdasarkan id juga untuk mencegah duplikasi data akibat latest() yang sama waktunya
+    $projects = $query->latest()->orderByDesc('id')->paginate(12);
 
     $totalDone = \App\Models\Project::where('status', 'done')->count();
     $totalInProgress = \App\Models\Project::where('status', 'in_progress')->count();

@@ -3,8 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <title>Public Showcase & Status Proyek | Freelance Hub</title>
-
+    <meta name="description" content="Platform resmi pemantauan status pengerjaan sistem aplikasi, joki koding, dan proyek freelance. Transparan, terstruktur, dan terpantau secara langsung.">
+    <meta property="og:title" content="Public Showcase & Status Proyek | Freelance Hub">
+    <meta property="og:description" content="Platform resmi pemantauan status pengerjaan sistem aplikasi, joki koding, dan proyek freelance.">
+    <meta property="og:image" content="{{ asset('images/og-showcase.png') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
@@ -124,9 +131,10 @@
                     <label for="status" class="block text-xs font-semibold text-zinc-400 uppercase mb-2">Status Pengerjaan</label>
                     <select name="status" id="status" onchange="this.form.submit()"
                             class="w-full bg-zinc-900/60 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-cyan-500 focus:ring-cyan-500 focus:outline-none transition-colors">
-                        <option value="">Semua Status Aktif</option>
+                        <option value="">Semua Status</option>
                         <option value="in_progress" {{ request('status') === 'in_progress' ? 'selected' : '' }}>⚡ Sedang Dikerjakan (In Progress)</option>
                         <option value="on_hold" {{ request('status') === 'on_hold' ? 'selected' : '' }}>⏸️ Tertunda (On Hold)</option>
+                        <option value="done" {{ request('status') === 'done' ? 'selected' : '' }}>✅ Selesai (Done)</option>
                     </select>
                 </div>
             </form>
@@ -195,6 +203,57 @@
         <!-- Pagination -->
         <div class="mb-12">
             {{ $projects->links() }}
+        </div>
+
+        <!-- Testimoni / Portfolio Section -->
+        <div class="mt-20 mb-10 text-center animate-fade-in-up">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                Kredibilitas & Kepercayaan
+            </span>
+            <h2 class="text-3xl font-extrabold text-white tracking-tight mb-4">Portofolio & Apa Kata Klien</h2>
+            <p class="text-zinc-400 max-w-2xl mx-auto mb-10">Beberapa umpan balik dari klien yang telah mempercayakan proyek pengembangan sistem dan penyelesaian tugas mereka kepada kami.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                <!-- Testimonial 1 -->
+                <div class="glass-panel p-8 rounded-3xl border border-zinc-800 relative">
+                    <div class="absolute -top-5 -left-2 text-6xl text-zinc-800 font-serif">"</div>
+                    <p class="text-sm text-zinc-300 relative z-10 italic mb-6">"Pengerjaannya sangat cepat dan rapi. Sistem kasir yang dibuatkan sangat membantu operasional toko saya. Dokumentasinya juga lengkap!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold">A</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">Andi S.</p>
+                            <p class="text-xs text-zinc-500">Pemilik Toko Retail</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="glass-panel p-8 rounded-3xl border border-zinc-800 relative">
+                    <div class="absolute -top-5 -left-2 text-6xl text-zinc-800 font-serif">"</div>
+                    <p class="text-sm text-zinc-300 relative z-10 italic mb-6">"Tugas koding saya selesai sebelum deadline dengan hasil yang di luar ekspektasi. Penjelasannya juga mudah dipahami untuk presentasi."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold">B</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">Budi Santoso</p>
+                            <p class="text-xs text-zinc-500">Mahasiswa Informatika</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="glass-panel p-8 rounded-3xl border border-zinc-800 relative md:col-span-2 lg:col-span-1">
+                    <div class="absolute -top-5 -left-2 text-6xl text-zinc-800 font-serif">"</div>
+                    <p class="text-sm text-zinc-300 relative z-10 italic mb-6">"Sangat profesional! Update progress secara berkala dan fitur yang direquest diimplementasikan dengan sempurna tanpa bug."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-rose-400 to-red-500 flex items-center justify-center text-white font-bold">C</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">Citra Lestari</p>
+                            <p class="text-xs text-zinc-500">Startup Founder</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
